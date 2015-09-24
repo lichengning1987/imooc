@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title></title>
+    <style type="text/css">
+        .imgUl li{ float:left; margin-left:20px; list-style:none; margin-top:20px; border:5px solid #ccc;}
+    </style>
+    <script src="http://127.0.0.1/awu/mall/public/js/jq.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+              $(".imgbox").imgBox({ idName: "#lightbox" })
+        })
+    </script>
+</head>
+<body>
+<!--测试图片显示效果-->
+<div>
+    <p>测试图片显示效果----点击下面图片显示大图效果</p>
+    <ul class="imgUl">
+        <li class="imgbox" href="http://tawu.hslvv.com/uploads/wx/1431508129_0.png" title="01图片"><img width="40" height="40" src="http://tawu.hslvv.com/uploads/wx/1431508129_0.png" title="01"/></li>
+
+    </ul>
+
+</div>
+<div id="lightbox">
+    <div id="close"></div>
+    <img src="" /></img>
+    <div>
+    </div>
+</div>
+<p style="clear:left; margin-top:30px;">    <a href="www.51yyx.com">点击查看更多插件效果！！！</a></p>
+<script type="text/javascript">
+    (function ($) {
+        $.fn.imgBox = function (opts){
+            var width = $(window).width();
+            var height = $(window).height();
+            var defaults={idName:"#lightbox"};
+            var obj= $.extend({}, defaults, opts);
+            var id = $(obj.idName)
+            id.hide();
+            $(".imgbox").click(function (e) {
+                var img = new Image();
+                img.src = $(this).attr("href");
+                $("*").stop(); //停止所有正在运行的动画
+                id.hide();
+                //                var html = "<div id=\"lightbox\"><img  src=\"" + img.src + "\" /><div id=\"close\"></div></img><div>" + $(this).attr("title") + "</div></div>"
+                //                $("body").append(html);
+                $("img", id).attr("src", img.src);
+                $("div:eq(1)", id).html($(this).attr("title"));
+                //追加一个层，使背景变灰
+                $("body").append("<div id='greybackground'></div>");
+                $("#greybackground").css({
+                    opacity: "0.5",
+                    height: "100%",
+                    width: "100%",
+                    top: 0,
+                    left: 0,
+                    position: "absolute",
+                    backgroundColor: "#9c9c9c"
+                });
+                //设置样式
+                id.css({
+                    position: "absolute",
+                    border: "5px solid #ccc",
+                    "text-align": "center",
+                    width: img.width
+                })
+                $("#close", id).css({
+                    position: "absolute",
+                    top: -13 + "px",
+                    left: img.width - 10 + "px",
+                    width: "26px",
+                    height: "26px",
+                    background: "url(Images/fancybox.png) -42px 0",
+                    cursor: "pointer"
+                })
+                $("div:eq(1)", id).css({
+                    "font-size": "12px", "font-family": "Arial", margin: "5px"
+                })
+                id.css({ "top": (height - img.height) / 2 + "px", "left": (width - img.width) / 2 - 17 + "px", "z-index": 1000 }).fadeIn("slow");
+            })
+            $("#close", id).click(function () {
+                id.hide();
+                $("#greybackground").remove();
+            })
+        }
+    }) (jQuery)
+</script>
+
+</body>
+</html>
